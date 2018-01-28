@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="almundo-callcenter">
+  <ClassDiagramComponents>
+    <Class name="IncomingCall" package="com.almundo.callcenter.controller" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="call" type="Integer" visibility="private"/>
+        <Field name="dispatcher" type="Dispatcher" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Dispatcher" name="dispatcher"/>
+          <Argument type="Integer" name="call"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="call" returnType="Employee" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Dispatcher" package="com.almundo.callcenter.controller" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="employeePriority" type="PriorityBlockingQueue&lt;Employee&gt;" visibility="private"/>
+        <Field name="logger" type="Logger" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="MAX_CALL_DURATION" type="Integer" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="MIN_CALL_DURATION" type="Integer" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="PriorityBlockingQueue&lt;Employee&gt;" name="employee"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="dispatchCall" returnType="Employee" visibility="public">
+          <Argument type="Integer" name="call"/>
+        </Method>
+        <Method name="doCall" returnType="void" visibility="private">
+          <Argument type="Integer" name="call"/>
+          <Argument type="Employee" name="employee"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Request" package="com.almundo.callcenter.controller" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="logger" type="Logger" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="play" returnType="void" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="App" package="com.almundo.callcenter" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="logger" type="Logger" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Director" package="com.almundo.callcenter.model" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="name"/>
+        </Constructor>
+      </Constructors>
+      <Methods/>
+    </Class>
+    <Class name="Supervisor" package="com.almundo.callcenter.model" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="name"/>
+        </Constructor>
+      </Constructors>
+      <Methods/>
+    </Class>
+    <Class name="Operator" package="com.almundo.callcenter.model" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="name"/>
+        </Constructor>
+      </Constructors>
+      <Methods/>
+    </Class>
+    <Enum name="Position" package="com.almundo.callcenter.model" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Literals>
+        <Literal name="OPERATOR"/>
+        <Literal name="SUPERVISOR"/>
+        <Literal name="DIRECTOR"/>
+      </Literals>
+    </Enum>
+    <Class name="Employee" package="com.almundo.callcenter.model" visibility="public" xPosition="20.0" yPosition="420.0">
+      <Fields>
+        <Field name="name" type="String" visibility="private"/>
+        <Field name="position" type="Position" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="name"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getPosition" returnType="Position" visibility="public"/>
+        <Method name="setPosition" returnType="void" visibility="public">
+          <Argument type="Position" name="position"/>
+        </Method>
+        <Method name="getName" returnType="String" visibility="public"/>
+        <Method name="compareTo" returnType="int" visibility="public">
+          <Argument type="Employee" name="o"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="position" source="com.almundo.callcenter.model.Employee" target="com.almundo.callcenter.model.Position" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.almundo.callcenter.controller.IncomingCall" target="com.almundo.callcenter.model.Employee" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="com.almundo.callcenter.model.Supervisor" target="com.almundo.callcenter.model.Employee"/>
+    <IsRelation name="is" source="com.almundo.callcenter.model.Operator" target="com.almundo.callcenter.model.Employee"/>
+    <HasRelation name="employeePriority" source="com.almundo.callcenter.controller.Dispatcher" target="com.almundo.callcenter.model.Employee" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="PriorityBlockingQueue&lt;Employee&gt;"/>
+    <UseRelation source="com.almundo.callcenter.model.Employee" target="com.almundo.callcenter.model.Employee" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="com.almundo.callcenter.model.Director" target="com.almundo.callcenter.model.Employee"/>
+    <HasRelation name="dispatcher" source="com.almundo.callcenter.controller.IncomingCall" target="com.almundo.callcenter.controller.Dispatcher" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.almundo.callcenter.controller.Dispatcher" target="com.almundo.callcenter.model.Employee" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="com.almundo.callcenter.model.Employee" target="com.almundo.callcenter.model.Position" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
